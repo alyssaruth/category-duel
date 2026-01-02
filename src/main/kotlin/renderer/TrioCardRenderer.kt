@@ -14,32 +14,26 @@ const val WIDTH = 816
 const val HEIGHT = 1110
 
 const val BORDER_WIDTH = 72
-
 const val IMAGE_SIZE = 298
-const val SECTION_HEIGHT = IMAGE_SIZE
-const val SECTION_WIDTH = WIDTH - (2*BORDER_WIDTH)
-const val DESCRIPTION_WIDTH = SECTION_WIDTH - IMAGE_SIZE - 5
-const val SEPARATOR_WIDTH = BORDER_WIDTH / 2
-
 const val NUMBER_HEIGHT = 115
 const val NAME_HEIGHT = 39
+const val SEPARATOR_WIDTH = BORDER_WIDTH / 2
+const val IMAGE_SEPARATOR_WIDTH = 5
+
+// Computed
+const val SECTION_HEIGHT = IMAGE_SIZE
+const val SECTION_WIDTH = WIDTH - (2*BORDER_WIDTH)
+const val DESCRIPTION_WIDTH = SECTION_WIDTH - IMAGE_SIZE - IMAGE_SEPARATOR_WIDTH
 const val SECTION_VGAP = (SECTION_HEIGHT - NUMBER_HEIGHT - NAME_HEIGHT) / 3
 
 fun renderCard(three: Character, two: Character, one: Character): BufferedImage {
     val img = BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB)
     val g = img.createGraphics()
-
-    // Fill whole thing black
     g.paint = Color.BLACK
     g.fillRect(0, 0, WIDTH, HEIGHT)
 
-    // Section 1
     g.renderThree(three)
-
-    // Section 2
     g.renderTwo(two)
-
-    // Section 3
     g.renderOne(one)
 
     g.drawImage(img, 0, 0, null)
@@ -53,7 +47,6 @@ private fun Graphics2D.renderThree(character: Character) {
     drawImage(character.img, BORDER_WIDTH + DESCRIPTION_WIDTH + 5, BORDER_WIDTH, null)
 
     paintTextLabel("3", character.category, BORDER_WIDTH, BORDER_WIDTH + SECTION_VGAP, NUMBER_HEIGHT)
-
     paintTextLabel(character.name, character.category, BORDER_WIDTH, BORDER_WIDTH + SECTION_VGAP + NUMBER_HEIGHT + SECTION_VGAP, NAME_HEIGHT)
 }
 
@@ -66,7 +59,6 @@ private fun Graphics2D.renderTwo(character: Character) {
     fillRect(descriptionX, yStart, DESCRIPTION_WIDTH, SECTION_HEIGHT)
 
     paintTextLabel("2", character.category, descriptionX, yStart + SECTION_VGAP, NUMBER_HEIGHT)
-
     paintTextLabel(character.name, character.category, descriptionX, yStart + SECTION_VGAP + NUMBER_HEIGHT + SECTION_VGAP, NAME_HEIGHT)
 }
 
@@ -79,11 +71,10 @@ private fun Graphics2D.renderOne(character: Character) {
 
     paintTextLabel("1", character.category, BORDER_WIDTH, yStart + SECTION_VGAP, NUMBER_HEIGHT)
     paintTextLabel(character.name, character.category, BORDER_WIDTH, yStart + SECTION_VGAP + NUMBER_HEIGHT + SECTION_VGAP, NAME_HEIGHT)
-
 }
 
 private fun Graphics2D.paintTextLabel(text: String, category: Category, x: Int, y: Int, height: Int) {
-    val (font, topOffset) = category.font.forHeight(this, text, height)
+    val (font, topOffset) = category.font.forHeight(this, text, height, DESCRIPTION_WIDTH - 40)
     val metrics = getFontMetrics(font)
 
     val lbl = JLabel(text)
@@ -92,7 +83,6 @@ private fun Graphics2D.paintTextLabel(text: String, category: Category, x: Int, 
     lbl.verticalAlignment = SwingConstants.TOP
     lbl.font = font
     lbl.border = EmptyBorder(-topOffset, 0, 0, 0)
-    //lbl.isOpaque = true
     lbl.setSize(DESCRIPTION_WIDTH, metrics.height)
 
     setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
