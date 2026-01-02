@@ -1,5 +1,6 @@
 package com.github.alyssaruth.renderer
 
+import com.github.alyssaruth.Character
 import java.awt.Color
 import java.awt.image.BufferedImage
 
@@ -14,7 +15,7 @@ const val SECTION_WIDTH = WIDTH - (2*BORDER_WIDTH)
 const val DESCRIPTION_WIDTH = SECTION_WIDTH - IMAGE_SIZE - 5
 const val SEPARATOR_WIDTH = BORDER_WIDTH / 2
 
-fun renderCard(): BufferedImage {
+fun renderCard(three: Character, two: Character, one: Character): BufferedImage {
     val img = BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB)
     val g = img.createGraphics()
 
@@ -23,25 +24,22 @@ fun renderCard(): BufferedImage {
     g.fillRect(0, 0, WIDTH, HEIGHT)
 
     // Section 1
-    g.paint = Color.RED
+    g.paint = three.category.bg
     g.fillRect(BORDER_WIDTH, BORDER_WIDTH, DESCRIPTION_WIDTH, SECTION_HEIGHT)
 
-    g.paint = Color.PINK
-    g.fillRect(BORDER_WIDTH + DESCRIPTION_WIDTH + 5, BORDER_WIDTH, IMAGE_SIZE, IMAGE_SIZE)
+    g.drawImage(three.img, BORDER_WIDTH + DESCRIPTION_WIDTH + 5, BORDER_WIDTH, null)
 
     // Section 2
-    g.paint = Color.CYAN
-    g.fillRect(BORDER_WIDTH, BORDER_WIDTH + (SECTION_HEIGHT + SEPARATOR_WIDTH), IMAGE_SIZE, IMAGE_SIZE)
+    g.drawImage(two.img, BORDER_WIDTH, BORDER_WIDTH + (SECTION_HEIGHT + SEPARATOR_WIDTH), null)
 
-    g.paint = Color.BLUE
+    g.paint = two.category.bg
     g.fillRect(BORDER_WIDTH + IMAGE_SIZE + 5, BORDER_WIDTH + (SECTION_HEIGHT + SEPARATOR_WIDTH), DESCRIPTION_WIDTH, SECTION_HEIGHT)
 
     // Section 3
-    g.paint = Color.ORANGE
+    g.paint = one.category.bg
     g.fillRect(BORDER_WIDTH, BORDER_WIDTH + (2 * (SECTION_HEIGHT + SEPARATOR_WIDTH)), DESCRIPTION_WIDTH, SECTION_HEIGHT)
 
-    g.paint = Color.YELLOW
-    g.fillRect(BORDER_WIDTH + DESCRIPTION_WIDTH + 5, BORDER_WIDTH + (2 * (SECTION_HEIGHT + SEPARATOR_WIDTH)), IMAGE_SIZE, IMAGE_SIZE)
+    g.drawImage(one.img, BORDER_WIDTH + DESCRIPTION_WIDTH + 5, BORDER_WIDTH + (2 * (SECTION_HEIGHT + SEPARATOR_WIDTH)), null)
 
     g.drawImage(img, 0, 0, null)
     return img

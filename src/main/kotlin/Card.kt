@@ -1,5 +1,5 @@
 package com.github.alyssaruth
 
-data class Card(val top: Category, val middle: Category, val bottom: Category) {
-    fun contains(category: Category) = top == category || middle == category || bottom == category
+data class Card(val top: TestCategory, val middle: TestCategory, val bottom: TestCategory) {
+    fun contains(testCategory: TestCategory) = top == testCategory || middle == testCategory || bottom == testCategory
 }

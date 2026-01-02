@@ -1,4 +1,4 @@
-import com.github.alyssaruth.Category
+import com.github.alyssaruth.TestCategory
 import com.github.alyssaruth.deck
 import io.kotest.assertions.forEachAsClue
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
@@ -18,9 +18,9 @@ class DeckTest {
 
     @Test
     fun `Within each top category, every other category should appear as middle and bottom once`() {
-        Category.entries.forEachAsClue { category ->
+        TestCategory.entries.forEachAsClue { category ->
             val cards = deck.filter { it.top == category }
-            val remainingCategories = Category.entries.filterNot { it == category }
+            val remainingCategories = TestCategory.entries.filterNot { it == category }
 
             cards.map { it.middle }.shouldContainExactlyInAnyOrder(remainingCategories)
             cards.map { it.bottom }.shouldContainExactlyInAnyOrder(remainingCategories)
@@ -29,9 +29,9 @@ class DeckTest {
 
     @Test
     fun `Within each middle category, every other category should appear as top and bottom once`() {
-        Category.entries.forEachAsClue { category ->
+        TestCategory.entries.forEachAsClue { category ->
             val cards = deck.filter { it.middle == category }
-            val remainingCategories = Category.entries.filterNot { it == category }
+            val remainingCategories = TestCategory.entries.filterNot { it == category }
 
             cards.map { it.top }.shouldContainExactlyInAnyOrder(remainingCategories)
             cards.map { it.bottom }.shouldContainExactlyInAnyOrder(remainingCategories)
@@ -40,9 +40,9 @@ class DeckTest {
 
     @Test
     fun `Within each bottom category, every other category should appear as top and middle once`() {
-        Category.entries.forEachAsClue { category ->
+        TestCategory.entries.forEachAsClue { category ->
             val cards = deck.filter { it.bottom == category }
-            val remainingCategories = Category.entries.filterNot { it == category }
+            val remainingCategories = TestCategory.entries.filterNot { it == category }
 
             cards.map { it.top }.shouldContainExactlyInAnyOrder(remainingCategories)
             cards.map { it.middle }.shouldContainExactlyInAnyOrder(remainingCategories)
@@ -51,7 +51,7 @@ class DeckTest {
 
     @Test
     fun `Total counts for each category should be the same as each other`() {
-        Category.entries.forEachAsClue { category ->
+        TestCategory.entries.forEachAsClue { category ->
             deck.count { it.top == category } shouldBe 7
             deck.count { it.middle == category } shouldBe 7
             deck.count { it.bottom == category } shouldBe 7
@@ -60,11 +60,11 @@ class DeckTest {
 
     @Test
     fun `Removing one arbitrary category should leave a valid deck`() {
-        Category.entries.forEachAsClue { categoryToRemove ->
+        TestCategory.entries.forEachAsClue { categoryToRemove ->
             val partialDeck = deck.filterNot { it.contains(categoryToRemove) }
             println(partialDeck.size)
 
-            val remainingCategories = Category.entries.filterNot { it == categoryToRemove }
+            val remainingCategories = TestCategory.entries.filterNot { it == categoryToRemove }
             remainingCategories.forEach { category ->
                 partialDeck.count { it.top == category } shouldBe 5
                 partialDeck.count { it.middle == category } shouldBe 5
