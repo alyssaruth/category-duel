@@ -44,7 +44,7 @@ private fun Graphics2D.renderThree(character: Character) {
     paint = character.category.bg
     fillRect(BORDER_WIDTH, BORDER_WIDTH, DESCRIPTION_WIDTH, SECTION_HEIGHT)
 
-    drawImage(character.img, BORDER_WIDTH + DESCRIPTION_WIDTH + 5, BORDER_WIDTH, null)
+    drawImage(character.img, BORDER_WIDTH + DESCRIPTION_WIDTH + IMAGE_SEPARATOR_WIDTH, BORDER_WIDTH, null)
 
     paintTextLabel("3", character.category, BORDER_WIDTH, BORDER_WIDTH + SECTION_VGAP, NUMBER_HEIGHT)
     paintTextLabel(character.name, character.category, BORDER_WIDTH, BORDER_WIDTH + SECTION_VGAP + NUMBER_HEIGHT + SECTION_VGAP, NAME_HEIGHT)
@@ -55,7 +55,7 @@ private fun Graphics2D.renderTwo(character: Character) {
     drawImage(character.img, BORDER_WIDTH, yStart, null)
 
     paint = character.category.bg
-    val descriptionX = BORDER_WIDTH + IMAGE_SIZE + 5
+    val descriptionX = BORDER_WIDTH + IMAGE_SIZE + IMAGE_SEPARATOR_WIDTH
     fillRect(descriptionX, yStart, DESCRIPTION_WIDTH, SECTION_HEIGHT)
 
     paintTextLabel("2", character.category, descriptionX, yStart + SECTION_VGAP, NUMBER_HEIGHT)
@@ -67,7 +67,7 @@ private fun Graphics2D.renderOne(character: Character) {
     paint = character.category.bg
     fillRect(BORDER_WIDTH, yStart, DESCRIPTION_WIDTH, SECTION_HEIGHT)
 
-    drawImage(character.img, BORDER_WIDTH + DESCRIPTION_WIDTH + 5, yStart, null)
+    drawImage(character.img, BORDER_WIDTH + DESCRIPTION_WIDTH + IMAGE_SEPARATOR_WIDTH, yStart, null)
 
     paintTextLabel("1", character.category, BORDER_WIDTH, yStart + SECTION_VGAP, NUMBER_HEIGHT)
     paintTextLabel(character.name, character.category, BORDER_WIDTH, yStart + SECTION_VGAP + NUMBER_HEIGHT + SECTION_VGAP, NAME_HEIGHT)
