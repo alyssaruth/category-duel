@@ -2,6 +2,7 @@ package com.github.alyssaruth.renderer
 
 import com.github.alyssaruth.Category
 import com.github.alyssaruth.Character
+import com.github.alyssaruth.TrioCard
 import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.RenderingHints
@@ -26,7 +27,8 @@ const val SECTION_WIDTH = WIDTH - (2*BORDER_WIDTH)
 const val DESCRIPTION_WIDTH = SECTION_WIDTH - IMAGE_SIZE - IMAGE_SEPARATOR_WIDTH
 const val SECTION_VGAP = (SECTION_HEIGHT - NUMBER_HEIGHT - NAME_HEIGHT) / 3
 
-fun renderCard(three: Character, two: Character, one: Character): BufferedImage {
+fun renderCard(card: TrioCard): BufferedImage {
+    val (three, two, one) = card
     val img = BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB)
     val g = img.createGraphics()
     g.paint = Color.BLACK
@@ -44,7 +46,7 @@ private fun Graphics2D.renderThree(character: Character) {
     paint = character.category.bg
     fillRect(BORDER_WIDTH, BORDER_WIDTH, DESCRIPTION_WIDTH, SECTION_HEIGHT)
 
-    drawImage(character.img, BORDER_WIDTH + DESCRIPTION_WIDTH + IMAGE_SEPARATOR_WIDTH, BORDER_WIDTH, null)
+    drawImage(character.getImage(), BORDER_WIDTH + DESCRIPTION_WIDTH + IMAGE_SEPARATOR_WIDTH, BORDER_WIDTH, null)
 
     paintTextLabel("3", character.category, BORDER_WIDTH, BORDER_WIDTH + SECTION_VGAP, NUMBER_HEIGHT)
     paintTextLabel(character.name, character.category, BORDER_WIDTH, BORDER_WIDTH + SECTION_VGAP + NUMBER_HEIGHT + SECTION_VGAP, NAME_HEIGHT)
@@ -52,7 +54,7 @@ private fun Graphics2D.renderThree(character: Character) {
 
 private fun Graphics2D.renderTwo(character: Character) {
     val yStart = BORDER_WIDTH + (SECTION_HEIGHT + SEPARATOR_WIDTH)
-    drawImage(character.img, BORDER_WIDTH, yStart, null)
+    drawImage(character.getImage(), BORDER_WIDTH, yStart, null)
 
     paint = character.category.bg
     val descriptionX = BORDER_WIDTH + IMAGE_SIZE + IMAGE_SEPARATOR_WIDTH
@@ -67,7 +69,7 @@ private fun Graphics2D.renderOne(character: Character) {
     paint = character.category.bg
     fillRect(BORDER_WIDTH, yStart, DESCRIPTION_WIDTH, SECTION_HEIGHT)
 
-    drawImage(character.img, BORDER_WIDTH + DESCRIPTION_WIDTH + IMAGE_SEPARATOR_WIDTH, yStart, null)
+    drawImage(character.getImage(), BORDER_WIDTH + DESCRIPTION_WIDTH + IMAGE_SEPARATOR_WIDTH, yStart, null)
 
     paintTextLabel("1", character.category, BORDER_WIDTH, yStart + SECTION_VGAP, NUMBER_HEIGHT)
     paintTextLabel(character.name, character.category, BORDER_WIDTH, yStart + SECTION_VGAP + NUMBER_HEIGHT + SECTION_VGAP, NAME_HEIGHT)

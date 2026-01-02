@@ -1,6 +1,6 @@
 package com.github.alyssaruth
 
-enum class TestCategory {
+enum class CategoryId {
     A,
     B,
     C,
